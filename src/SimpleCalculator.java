@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//s
+
 public class SimpleCalculator implements ActionListener {
     //GUI canvas stats
     final int WINDOW_WIDTH = 350;
