@@ -103,8 +103,7 @@ public class SimpleCalculator implements ActionListener {
             displayResult.setText("");
             operation = "division";
         } else if (e.getSource() == clearButton) {
-            result = 0D;
-            displayResult.setText(String.valueOf(result));
+            displayResult.setText("");
         } else if (e.getSource() == dotButton) {
             displayResult.setText(displayResult.getText().concat("."));
 
