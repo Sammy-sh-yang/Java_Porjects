@@ -3,6 +3,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/*
+ * Try use Stack instead of using Switch case
+ *
+ */
 public class SimpleCalculator implements ActionListener {
     //GUI canvas stats
     final int WINDOW_WIDTH = 350;
