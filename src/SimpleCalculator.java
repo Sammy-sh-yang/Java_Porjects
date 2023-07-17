@@ -19,8 +19,8 @@ public class SimpleCalculator implements ActionListener {
     JTextField displayResult = new JTextField();
     Double n1;
     Double n2;
-    int result;
     String operation;
+    int result;
 
     //Create a new button
     public JButton newButton(String s) {
@@ -86,7 +86,7 @@ public class SimpleCalculator implements ActionListener {
         char[] ch = s.toCharArray();
 
         for (int i = 0; i < ch.length; i++) {
-            if (ch.length == ' ') {
+            if (ch[i] == ' ') {
                 continue;
             }
 
@@ -106,6 +106,8 @@ public class SimpleCalculator implements ActionListener {
                     num *= stack.pop();
                 } else if (operator == '/') {
                     num = (stack.pop() / num);
+                } else if (operator == '.') {
+                    num = stack.pop() + '.' + num;
                 }
                 stack.push(num);
 
@@ -130,6 +132,7 @@ public class SimpleCalculator implements ActionListener {
             }
         }
 
+        //dotButton no function
         if (e.getSource() == addButton) {
             displayResult.setText(displayResult.getText().concat("+"));
         } else if (e.getSource() == subButton) {
@@ -138,8 +141,6 @@ public class SimpleCalculator implements ActionListener {
             displayResult.setText(displayResult.getText().concat("*"));
         } else if (e.getSource() == divButton) {
             displayResult.setText(displayResult.getText().concat("/"));
-        } else if (e.getSource() == dotButton) {
-            displayResult.setText(displayResult.getText().concat("."));
         } else if (e.getSource() == clearButton) {
             displayResult.setText("");
         } else if (e.getSource() == eqButton) {
