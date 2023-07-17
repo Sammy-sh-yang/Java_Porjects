@@ -148,7 +148,7 @@ public class SimpleCalculator implements ActionListener {
 
 
         /*
-         * Calculation using Switch case (old ver)
+         * Calculation using Switch case (old version)
          */
 
 //        if (e.getSource() == addButton) {
