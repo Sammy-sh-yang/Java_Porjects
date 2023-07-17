@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class stackMethod {
 
-    // operation
+    // operations
 
     public static void main(String[] args) {
 
