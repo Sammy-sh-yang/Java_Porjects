@@ -79,6 +79,7 @@ public class SimpleCalculator implements ActionListener {
         frame.setVisible(true); //Set GUI visible
     }
 
+    // Calculation using Stack
     public int calculateResult(String s) {
         Stack<Integer> stack = new Stack<>();
         char operator = '+';
