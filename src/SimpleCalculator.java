@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Stack;
 
 /*
  * Try use Stack instead of using Switch case
@@ -16,9 +17,12 @@ public class SimpleCalculator implements ActionListener {
     //JButton[] functionButton = new JButton[7];//+ - * / . clear =
     JButton addButton, subButton, mulButton, divButton, dotButton, clearButton, eqButton;
     JTextField displayResult = new JTextField();
-    Double n1, n2, result;
+    Double n1;
+    Double n2;
+    int result;
     String operation;
 
+    //Create a new button
     public JButton newButton(String s) {
         JButton button = new JButton();
         button.addActionListener(this);
@@ -75,12 +79,47 @@ public class SimpleCalculator implements ActionListener {
         frame.setVisible(true); //Set GUI visible
     }
 
+    public int calculateResult(String s) {
+        Stack<Integer> stack = new Stack<>();
+        char operator = '+';
+        char[] ch = s.toCharArray();
 
-    public static void main(String[] args) {
-        SimpleCalculator g = new SimpleCalculator();
-        g.paint();
+        for (int i = 0; i < ch.length; i++) {
+            if (ch.length == ' ') {
+                continue;
+            }
 
+            if (Character.isDigit(ch[i])) {
+
+                StringBuilder numBuilder = new StringBuilder();
+                while (i < ch.length && Character.isDigit(ch[i])) {
+                    numBuilder.append(ch[i++]);
+                }
+                i--;
+
+                int num = Integer.parseInt(numBuilder.toString());
+
+                if (operator == '-') {
+                    num *= -1;
+                } else if (operator == '*') {
+                    num *= stack.pop();
+                } else if (operator == '/') {
+                    num = (stack.pop() / num);
+                }
+                stack.push(num);
+
+            } else {
+                operator = ch[i];
+            }
+        }
+
+        int total = 0;
+        while (!stack.empty()) {
+            total += stack.pop();
+        }
+        return total;
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -91,46 +130,77 @@ public class SimpleCalculator implements ActionListener {
         }
 
         if (e.getSource() == addButton) {
-            n1 = Double.parseDouble(displayResult.getText());
-            displayResult.setText("");
-            operation = "add";
+            displayResult.setText(displayResult.getText().concat("+"));
         } else if (e.getSource() == subButton) {
-            n1 = Double.parseDouble(displayResult.getText());
-            displayResult.setText("");
-            operation = "subtract";
+            displayResult.setText(displayResult.getText().concat("-"));
         } else if (e.getSource() == mulButton) {
-            n1 = Double.parseDouble(displayResult.getText());
-            displayResult.setText("");
-            operation = "multiplication";
+            displayResult.setText(displayResult.getText().concat("*"));
         } else if (e.getSource() == divButton) {
-            n1 = Double.parseDouble(displayResult.getText());
-            displayResult.setText("");
-            operation = "division";
-        } else if (e.getSource() == clearButton) {
-            displayResult.setText("");
+            displayResult.setText(displayResult.getText().concat("/"));
         } else if (e.getSource() == dotButton) {
             displayResult.setText(displayResult.getText().concat("."));
-
+        } else if (e.getSource() == clearButton) {
+            displayResult.setText("");
         } else if (e.getSource() == eqButton) {
-            n2 = Double.parseDouble(displayResult.getText());
-            switch (operation) {
-                case "add":
-                    result = n1 + n2;
-                    break;
-                case "subtract":
-                    result = n1 - n2;
-                    break;
-                case "division":
-                    result = n1 / n2;
-                    break;
-                case "multiplication":
-                    result = n1 * n2;
-                    break;
-                default:
-                    System.out.println("??");
-            }
+            result = calculateResult(displayResult.getText());
             displayResult.setText(String.valueOf(result));
         }
 
+
+        /*
+         * Calculation using Switch case (old ver)
+         */
+
+//        if (e.getSource() == addButton) {
+//            n1 = Double.parseDouble(displayResult.getText());
+//            displayResult.setText("0");
+//            operation = "add";
+//        }
+//        else if (e.getSource() == subButton) {
+//            n1 = Double.parseDouble(displayResult.getText());
+//            displayResult.setText("");
+//            operation = "subtract";
+//        } else if (e.getSource() == mulButton) {
+//            n1 = Double.parseDouble(displayResult.getText());
+//            displayResult.setText("");
+//            operation = "multiplication";
+//        } else if (e.getSource() == divButton) {
+//            n1 = Double.parseDouble(displayResult.getText());
+//            displayResult.setText("");
+//            operation = "division";
+//        } else if (e.getSource() == clearButton) {
+//            displayResult.setText("");
+//        } else if (e.getSource() == dotButton) {
+//            displayResult.setText(displayResult.getText().concat("."));
+//
+//        } else if (e.getSource() == eqButton) {
+//            n2 = Double.parseDouble(displayResult.getText());
+//            //results
+//            switch (operation) {
+//                case "add":
+//                    result = n1 + n2;
+//                    break;
+//                case "subtract":
+//                    result = n1 - n2;
+//                    break;
+//                case "division":
+//                    result = n1 / n2;
+//                    break;
+//                case "multiplication":
+//                    result = n1 * n2;
+//                    break;
+//                default:
+//                    System.out.println("??");
+//            }
+//            displayResult.setText(String.valueOf(result));
+//        }
+
     }
+
+    public static void main(String[] args) {
+        SimpleCalculator g = new SimpleCalculator();
+        g.paint();
+
+    }
+
 }
